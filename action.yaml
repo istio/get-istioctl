@@ -1,5 +1,8 @@
 name: 'get-istioctl'
 description: 'Get a specific version of istioctl using semver match'
+branding:
+  icon: 'terminal'  
+  color: 'blue'
 runs:
   using: 'node16'
   main: 'index.js'
