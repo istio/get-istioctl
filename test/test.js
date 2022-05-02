@@ -9,7 +9,7 @@ it('should wait until server is online', async function() {
   this.timeout(timeout)
   var max, istioctlkey, istiokey
   const doGetRelease = async() => {
-    [max, istioctlkey, istiokey] = await getIstioRelease('1.11.*', 'local', 'local')
+    [max, istioctlkey, istiokey] = await getIstioRelease('1.11.*', 'local', '-local')
     await downloadIstioctl(istioctlkey)
     assert.equal(max.version, "1.11.8")
     assert.ok(validUrl.isUri(istiokey))
