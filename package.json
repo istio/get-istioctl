@@ -2,7 +2,7 @@
   "name": "get-istioctl",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "mocha --recursive --exit",
     "build": "ncc build index.js -o dist"
