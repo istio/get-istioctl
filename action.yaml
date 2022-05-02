@@ -5,7 +5,7 @@ branding:
   color: 'blue'
 runs:
   using: 'node16'
-  main: 'index.js'
+  main: 'dist/index.js'
 inputs:
   version:
     description: "a semver matching expression, indicating which istio version
