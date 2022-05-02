@@ -55,6 +55,7 @@ export async function getIstioRelease(expr, osvar, arch) {
   }
   let istioctlkey = util.format("%s-%s-%s%s%s", "istioctl", max.raw, osvar, arch, extension)
   let istiokey = util.format("%s-%s-%s%s%s", "istio", max.raw, osvar, arch, extension)
+  console.log("returning data for " + istioctlkey)
   return [max, artifacts.get(istioctlkey).browser_download_url, artifacts.get(istiokey).browser_download_url]
 }
 
