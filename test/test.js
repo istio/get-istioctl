@@ -4,8 +4,9 @@ import assert from 'assert'
 import validUrl from 'valid-url'
 import fs from 'fs';
 
+const timeout = 30000
 it('should wait until server is online', async function() {
-  this.timeout(10000)
+  this.timeout(timeout)
   var max, istioctlkey, istiokey
   const doGetRelease = async() => {
     [max, istioctlkey, istiokey] = await getIstioRelease('1.11.*', 'local', 'local')
@@ -18,7 +19,7 @@ it('should wait until server is online', async function() {
     fs.unlinkSync("istioctl")
     return true
   }
-  await AsyncTestUtil.waitUntil(doGetRelease, 10000)
+  await AsyncTestUtil.waitUntil(doGetRelease, timeout)
 
   // TODO: add assertions and cleanup for istioctl file
 

@@ -12,9 +12,11 @@ export async function getIstioRelease(expr, osvar, arch) {
     owner: 'istio',
     repo: 'istio',
   })
+  console.log("listReleases got status " + result.status)
   const relmap = new Map();
   result.data.forEach( rel => relmap.set(rel.tag_name, rel));
   let max = semver.parse(semver.maxSatisfying(Array.from(relmap.keys()), expr));
+  console.log("chose version  " + max.raw)
   let artifacts = relmap.get(max.raw).assets.reduce(function(map,obj) {
     map.set(obj.name, obj);
     return map;
