@@ -1,5 +1,6 @@
 import core from '@actions/core'
-import {downloadIstioctl, getIstioRelease} from './src/functions.js'
+import {maybeDownloadIstioctl, getIstioRelease} from './src/functions.js'
+import cache from '@actions/tool-cache'
 
 try {
   let osvar = core.getInput("os")
@@ -15,7 +16,7 @@ try {
   core.setOutput("istio-url", istiokey)
 
   // actually get istioctl
-  downloadIstioctl(istioctlkey).catch(
+  maybeDownloadIstioctl(istioctlkey, max.raw).catch(
       error => core.setFailed(error.message)
   );
 } catch (error) {

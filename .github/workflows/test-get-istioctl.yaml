@@ -16,7 +16,7 @@ jobs:
           version: '1.11.*'
       - name: Run Test
         run: |
-          if [ $(./istioctl version --remote=false) == "1.11.8" ]; then
+          if [ $(istioctl version --remote=false) == "1.11.8" ]; then
              echo "Test Passed"
           else
              echo "Test Failed"

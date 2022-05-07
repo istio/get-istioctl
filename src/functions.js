@@ -5,6 +5,9 @@ import {Octokit} from '@octokit/rest';
 import semver from 'semver';
 import os from 'os';
 import util from 'util';
+import cache from '@actions/tool-cache'
+import core from '@actions/core'
+
 
 export async function getIstioRelease(expr, osvar, arch) {
   const octokit = new Octokit()
@@ -59,13 +62,21 @@ export async function getIstioRelease(expr, osvar, arch) {
   return [max, artifacts.get(istioctlkey).browser_download_url, artifacts.get(istiokey).browser_download_url]
 }
 
-export async function downloadIstioctl(uri) {
-  const localFile = 'istioctl.tar.gz'
-  // download the tar
-  fs.writeFileSync(localFile, await download(uri));
-  // extract
-  await tar.x( { file: localFile } )
-  // delete the tar
-  fs.unlinkSync(localFile)
+export async function maybeDownloadIstioctl(uri, version) {
+  // TODO: caching should allow us to speed things up, but I don't understand if this is right
+  let cp = ""
+  try {
+    cp = cache.find("istioctl", version)
+  } catch (ex){
+    console.log("find caused an exception " + ex)
+  }
+  if (cp === "") {
+    console.log("find returned an empty string")
+    const localFile = 'istioctl.tar.gz'
+    const dlp = await cache.downloadTool(uri)
+    const exp = await cache.extractTar(dlp)
+    cp = await cache.cacheDir(exp, "istioctl", version)
+  }
+  core.addPath(cp)
 }
 
