@@ -19,7 +19,7 @@
     "async-test-util": "^2.0.0",
     "download": "^8.0.0",
     "mocha": "^10.0.0",
-    "semver": "^7.3.5",
+    "semver": "^7.5.2",
     "tar": "^6.1.11",
     "url-parse": "^1.5.10",
     "valid-url": "^1.0.9"
