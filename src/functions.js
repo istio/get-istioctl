@@ -10,14 +10,16 @@ import core from '@actions/core'
 
 
 export async function getIstioRelease(expr, osvar, arch) {
-  const octokit = new Octokit()
+  const octokit = new Octokit({
+    auth: process.env.GITHUB_TOKEN,
+  })
   let result = await octokit.rest.repos.listReleases({
     owner: 'istio',
     repo: 'istio',
   })
   console.log("listReleases got status " + result.status)
   const relmap = new Map();
-  result.data.forEach( rel => relmap.set(rel.tag_name, rel));
+  result.data.forEach(rel => relmap.set(rel.tag_name, rel));
   let max = semver.parse(semver.maxSatisfying(Array.from(relmap.keys()), expr));
   console.log("chose version  " + max.raw)
   let artifacts = relmap.get(max.raw).assets.reduce(function(map,obj) {
