@@ -20,7 +20,7 @@ function getLocalDir(dir)  {
 }
 
 it('should wait until server is online', async function() {
-  // fail test if it takes longer that 30 seconds
+  // fail test if it takes longer than 30 seconds
   this.timeout(30000)
 
   const tempPath =  getLocalDir('temp')
@@ -28,11 +28,14 @@ it('should wait until server is online', async function() {
   process.env['RUNNER_TEMP'] = tempPath
   process.env['RUNNER_TOOL_CACHE'] = cachePath
 
-  // note: the istioctl version being searched must appear within the first 30
-  // most recent releases, or the call to `getIstioRelease()` won't return it;
-  // therefore, this needs to be kept up-to-date
+  // KEEP TEST VALUE UP-TO-DATE WITH istioctl RELEASES
+  //   getIstioRelease() only looks at the 30 most recent releases of istioctl,
+  // and the test requires the searched for version to be returned; therefore, if
+  // this value isn't updated then this test could fail all of a sudden if enough
+  // releases happen.
   const testReleaseMajorMinor = '1.18'
-  // note: it needs to be known ahead of time what patch version will be returned
+  // KEEP TEST VALUE UP-TO-DATE WITH testReleaseMajorMinor LATEST PATCH VERSION
+  //   test expects this patch version to be the latest to be returned
   const testReleaseExpected = `${testReleaseMajorMinor}.2`
 
   var max, istioctlkey, istiokey
